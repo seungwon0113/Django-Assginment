@@ -1,5 +1,3 @@
-# todo / views.py
-
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -16,7 +14,7 @@ def todo_list(request):
     todo_list = Todo.objects.filter(user=request.user).order_by('created_at')
     q = request.GET.get('q') # GET 요청으로부터 q에 담긴 쿼리 파라미터를 가져옴
     if q:
-		    # 만약 쿼리파라미터가 존재하면 todo_list에서 해당 쿼리파라미터로 filter를 걸어 조건에 맞는 Todo객체만 가져옵니다.
+        # 만약 쿼리파라미터가 존재하면 todo_list에서 해당 쿼리파라미터로 filter를 걸어 조건에 맞는 Todo객체만 가져옵니다.
         todo_list = todo_list.filter(Q(title__icontains=q) | Q(description__icontains=q))
     paginator = Paginator(todo_list, 10) # Paginator 객체를 인스턴스화 합니다.
     page_number = request.GET.get('page') # GET 요청으로부터 page에 담긴 쿼리 파라미터 값을 가져옴
